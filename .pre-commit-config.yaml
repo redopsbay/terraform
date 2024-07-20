@@ -1,0 +1,34 @@
+fail_fast: false
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.77.3
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_docs
+      - id: terraform_validate
+        exclude: '^[^/]+$'
+      - id: terraform_checkov
+        args:
+          - --args=--quiet
+          - --args=--skip-framework=cloudformation
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-merge-conflict
+        exclude_types: [svg]
+      - id: pretty-format-json
+        args:
+          - --autofix
+          - --no-sort-keys
+      - id: check-added-large-files
+        args: ["--maxkb=4096"]
+      - id: detect-private-key
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+
+  - repo: https://github.com/sirosen/check-jsonschema
+    rev: 0.22.0
+    hooks:
+      - id: check-github-actions
+      - id: check-github-workflows
